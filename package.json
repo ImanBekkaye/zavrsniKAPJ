@@ -13,7 +13,8 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "node": "^12.4.0",
-    "sequelize": "^5.8.11",
+    "node-modules": "^1.0.1",
+    "sequelize": "^5.8.12",
     "sqlite3": "^4.0.9"
   }
 }
