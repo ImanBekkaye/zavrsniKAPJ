@@ -20,11 +20,11 @@ const Users = sequelize.define('user',{
     },
     longitude: {
         type: Sequelize.DECIMAL,
-        allowNull: false
+        allowNull: true
     },
     latitude: {
         type: Sequelize.DECIMAL,
-        allowNull: false
+        allowNull: true
     }
 });
 
@@ -44,13 +44,16 @@ const Messages = sequelize.define('message',{
         type: Sequelize.STRING,
         allowNull: true
     },
-    content:{
+    mess:{
         type: Sequelize.STRING,
         allowNull: false
     },
 
 });
 
+
+
+//sve lokacije
 
 const locationList = sequelize.define('location', {
     id: {
