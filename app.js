@@ -13,7 +13,7 @@ var loginRouter = require('./routes/login');
 var usersRouter = require('./routes/users');
 var registerRouter = require('./routes/register');
 var chatRouter = require('./routes/chat');
-
+var locationRouter = require('./routes/location');
 //var authorization = require('./helpers/authorization');
 
 models.createTables();
@@ -38,6 +38,7 @@ app.use('/login', loginRouter);
 app.use('/users', usersRouter);
 app.use('/register', registerRouter);
 app.use('/chat', chatRouter);
+app.use('/location', locationRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

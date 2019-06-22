@@ -76,12 +76,30 @@ const locationList = sequelize.define('location', {
 });
 
 
+
+
 locationList.belongsTo(Users, {
     foreignKey: 'id_username',
     targetKey: 'id'
 });
 
+//novo za lokacije
 
+const MeetingPoint = sequelize.define('meetingPoint', {
+    id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    longitude: {
+        type: Sequelize.DECIMAL,
+        allowNull: false
+    },
+    latitude: {
+        type: Sequelize.DECIMAL,
+        allowNull: false
+    }
+});
 const createTables = function() {
 
     sequelize.sync({ logging: console.log, force: true }).then(fullfil => {
@@ -99,6 +117,8 @@ const createTables = function() {
     });
 };
 
+
+module.exports.MeetingPoint = MeetingPoint;
 module.exports.Users = Users;
 module.exports.locationList = locationList;
 module.exports.Messages = Messages;

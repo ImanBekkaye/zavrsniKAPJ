@@ -6,6 +6,7 @@ var crypto = require('crypto');
 
 //nece trebati jer nema registracije
 var addUser = function(obj,regFunction){
+
     db.Users.create({username: obj.username, password: obj.password, longitude: obj.longitude, latitude: obj.latitude})
 
         .catch(err => {
@@ -13,6 +14,20 @@ var addUser = function(obj,regFunction){
         }).then(res => {
         //dodat user
         regFunction();//pravi kolacic i redirecta na user-ov profil
+    });
+
+
+}
+var regUser = function(obj){
+
+    db.Users.create({username: obj.username, password: obj.password, longitude: obj.longitude, latitude: obj.latitude})
+
+        .catch(err => {
+            return console.log(err.message);
+        }).then(res => {
+        //dodat user
+        console.log('registrovan');
+
     });
 
 
@@ -79,23 +94,47 @@ var getUserID = async (username)=>{
 //za lokacije
 //umjesto taska staviti lokaciju
 var getLocation = async (locationFunction)=> {
-
-    db.locationList.map().catch(err => {
+    var locationList = [];
+    db.MeetingPoint.findAll().catch(err => {
         console.log(err.message);
     }).then(rows => {
-        console.log('zavrsena fja findall',rows);
-        var locationList = [];
+
         rows.forEach(function (row) {
             console.log(row);
-          let  coordinates = {
-                longitude:row.dataValues.longitude,
-                latitude:row.dataValues.latitude
-          }
-            locationList.push(coordinates);
+            let obj={user: 'MeetingPoint',
+                coordinates:{
+                    longitude:row.dataValues.longitude,
+                    latitude:row.dataValues.latitude
+                }
+
+            }
+            locationList.push(obj);
         });
 
-        locationFunction(locationList);
+
     })
+
+    db.Users.findAll().catch(err => {
+        console.log(err.message);
+    }).then(rows => {
+
+        rows.forEach(function (row) {
+            console.log(row);
+            let obj={user: row.dataValues.username,
+            coordinates:{
+                    longitude:row.dataValues.longitude,
+                    latitude:row.dataValues.latitude
+            }
+
+            }
+
+            locationList.push(obj);
+        });
+        locationFunction(locationList);
+
+    })
+
+
 
 }
 
@@ -103,7 +142,7 @@ var getLocation = async (locationFunction)=> {
 var addLocation = async (obj,fun)=>{
     //var id = await getUserID(username);
 
-    db.locationList.create({id_username: obj.id_username, longitude: obj.longitude, latitude: obj.latitude})
+    db.MeetingPoint.create({ longitude: obj.longitude, latitude: obj.latitude})
         .catch(err => {
             console.log(console.error);
             return console.log(err.message);
@@ -134,16 +173,32 @@ var addLocation = async (obj,fun)=>{
 
 
 //auth
-var check = function(user, mess){
+var register = function(obj, mess){
     db.Users.findAll({
         where: {
-            username: user
+            username: obj.username
         }
     }).then(e => {
-        if (e == null) {
-            mess(false)
+        console.log('trazenje u bazi je vratilo:', e);
+        if (e.length === 0) {
+            regUser(obj);
+            mess(false);
         } else {
-            mess(true)
+            mess(true);
+        }
+    });
+}
+var check = function(obj, mess){
+    db.Users.findAll({
+        where: {
+            username: obj.username
+        }
+    }).then(e => {
+        console.log('trazenje u bazi je vratilo:', e);
+        if (e.length === 0) {
+            mess(false);
+        } else {
+            mess(true);
         }
     });
 }
@@ -222,5 +277,6 @@ module.exports = {
     getAllUsers,
     getGroupMess,
     addMess,
-    getUsersMess
+    getUsersMess,
+    register
 };
