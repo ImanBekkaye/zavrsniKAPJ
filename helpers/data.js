@@ -237,7 +237,7 @@ var getGroupMess = function(regFunction){
 var getUsersMess = function(obj,regFunction){
 
     db.Messages.findAll({where: { from: {[Op.or]:[obj.from,obj.to]} ,to: {[Op.or]:[obj.to,obj.from] }}}).then(rows => {
-        console.log('zavrsena fja allGroupMessages', rows);
+        console.log(' zavrsena fja allGroupMessages', rows);
         var usersMessList = [];
         rows.forEach(function (row) {
             console.log('red',row);
