@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('sqlite:data');
 
+
 const Users = sequelize.define('user',{
     id:{
         type: Sequelize.INTEGER,

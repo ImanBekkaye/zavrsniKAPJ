@@ -1,7 +1,7 @@
 const db = require('../models/models');
 var crypto = require('crypto');
 
-
+const Op = db.Sequelize.Op;
 
 
 //nece trebati jer nema registracije
@@ -236,7 +236,7 @@ var getGroupMess = function(regFunction){
 };
 var getUsersMess = function(obj,regFunction){
 
-    db.Messages.findAll({where: { from: obj.from ,to: obj.to }}).then(rows => {
+    db.Messages.findAll({where: { from: {[Op.or]:[obj.from,obj.to]} ,to: {[Op.or]:[obj.to,obj.from] }}}).then(rows => {
         console.log('zavrsena fja allGroupMessages', rows);
         var usersMessList = [];
         rows.forEach(function (row) {

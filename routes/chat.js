@@ -11,7 +11,7 @@ router.get('/all',function(req, res,next){
 
 });
 
-router.get('/private',function(req, res,next){
+router.post('/private',function(req, res,next){
     let obj={from:req.body.from, to: req.body.to}
     data.getUsersMess(obj,(usersMess)=>{
         res.send(usersMess);
