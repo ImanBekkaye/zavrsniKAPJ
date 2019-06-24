@@ -68,7 +68,7 @@ var checkPass = (obj,mess)=>{
             password: obj.password
         }
     }).then(e => {
-        if (e == null) {
+        if (e.length === 0 ) {
             mess(false)
         } else {
             mess(true)
