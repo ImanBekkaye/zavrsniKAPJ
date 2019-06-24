@@ -20,17 +20,16 @@ router.post('/',function(req, res,next){
         password: encryptPass,
     }
     data.checkPass(obj, function(ex){
-        if(ex){
-            console.log('postoji takvo ime  moze se prijavit');
-            //res.cookie('authx', req.body.username);
-            //console.log('kreiran kolac redirecta');
-            res.send(obj);
-
-        }else{
-            //ne postoji to ime ne moze se prijaviti
-            console.log(' NE postoji takvo ime NE  moze se prijavit');
-            res.send('error');
-        }
+        res.send(ex);
+        // if(ex){
+        //     console.log('postoji takvo ime  moze se prijavit');
+        //     res.send(obj);
+        //
+        // }else{
+        //     //ne postoji to ime ne moze se prijaviti
+        //     console.log(' NE postoji takvo ime NE  moze se prijavit');
+        //     res.send('error');
+        // }
     })
 
 

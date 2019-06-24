@@ -62,7 +62,7 @@ var encrypt = (password)=>{
     return hash.digest('hex');
 }
 var checkPass = (obj,mess)=>{
-    db.Users.find({
+    db.Users.findAll({
         where: {
             username: obj.username,
             password: obj.password
